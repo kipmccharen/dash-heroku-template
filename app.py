@@ -297,27 +297,24 @@ sidebar = html.Div(
     [
         html.H2("Sections", className="display-4"),
         html.Hr(),
-        # html.P(
-        #     "Sections", className="lead"
-        # ),
         dbc.Nav(
             [
                 dbc.NavLink("Gender Wage Gap & GSS", 
-                    href="/wage_gap-gss", id="page-1-link"),
+                    href="/wage_gap-gss", id="wage_gap-gss"),
                 dbc.NavLink("Income Violin Plots by Sex", 
-                    href="/h2_violin", id="page-2-link"),
+                    href="/violin", id="violin"),
                 dbc.NavLink("Summary Data by Sex", 
-                    href="/h2_table", id="page-3-link"),
+                    href="/table", id="table"),
                 dbc.NavLink("Traditional Gender Role Agreement", 
-                    href="/h2_roles", id="page-4-link"),
+                    href="/roles", id="roles"),
                 dbc.NavLink("Job Prestige/Income/Sex", 
-                    href="/h2_prestige", id="page-5-link"),
+                    href="/prestige", id="prestige"),
                 dbc.NavLink("Income and Prestige Distributions",
-                    href="/h2_diff_dist", id="page-6-link"),
+                    href="/diff_dist", id="diff_dist"),
                 dbc.NavLink("Prestige Levels", 
-                    href="/h2_income_dist", id="page-7-link"),
+                    href="/income_dist", id="income_dist"),
                 dbc.NavLink("AI Importance", 
-                    href="/h2_AI", id="page-8-link")
+                    href="/AI", id="AI")
             ],
             vertical=True,
             pills=True,
@@ -356,7 +353,9 @@ content = html.Div([
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
-pagecount = 8
+pages = ['wage_gap-gss', 'violin', 'table', 'roles', 
+        'prestige', 'diff_dist', 'income_dist', 'AI']
+pagecount = len(pages)
 # this callback uses the current pathname to set the active state of the
 # corresponding nav link to true, allowing users to tell see page they are on
 @app.callback(
@@ -367,7 +366,7 @@ def toggle_active_links(pathname):
     if pathname == "/":
         # Treat page 1 as the homepage / index
         return True, False, False
-    return [pathname == f"/page-{i}" for i in range(1, pagecount)]
+    return [pathname == f"/{i}" for i in pages]
 
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
@@ -379,43 +378,43 @@ def render_page_content(pathname):
         html.Div([
                 dcc.Markdown(children = gss_description)
             ],id='gss',style=textlayout)])
-    elif pathname == "/page-2":
+    elif pathname == "/violin":
         return html.P([
                 html.H2("Income Violin Plots by Sex"),
                 dcc.Graph(figure=violins),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
             ])
-    elif pathname == "/page-3":
+    elif pathname == "/table":
         return html.P([
                 html.H2("Summary Data by Sex"),
                 dcc.Graph(figure=table),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
             ])
-    elif pathname == "/page-4":
+    elif pathname == "/roles":
         return html.P([
                 html.H2("Agreement with Traditional Gender Roles by Sex"),
                 dcc.Graph(figure=fig1),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
             ])
-    elif pathname == "/page-5":
+    elif pathname == "/prestige":
         return html.P([
                 html.H2("Job Prestige vs Income, Colors by Sex"),
                 dcc.Graph(figure=fig2),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
             ])
-    elif pathname == "/page-6":
+    elif pathname == "/diff_dist":
         return html.P([
                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
                 dcc.Graph(figure=fig3),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
             ])
-    elif pathname == "/page-7":
+    elif pathname == "/income_dist":
         return html.P([
                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
                 dcc.Graph(figure=fig4),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
             ])
-    elif pathname == "/page-8":
+    elif pathname == "/AI":
         return html.P([
                 html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
                 html.Div([html.Img(src=xgplot)]),
