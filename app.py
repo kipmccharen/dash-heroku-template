@@ -276,12 +276,13 @@ server = app.server
 # ;
 # style={'fontColor': 'blue', 'background'='rgb(2,0,36)',
 #   'background'= 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,31,145,1) 15%, rgba(27,144,237,1) 100%)'}
-styledict = {'fontColor': 'rgb(242,242,242)', 
+styledict = {'fontColor': 'rgb(253,253,253)', 
                 'border':'1px solid black',
                 'margin-bottom':'50px', 
                 'margin-left':'auto',
                 'margin-right':'auto', 
-                'text-align':'center'}
+                'text-align':'center',
+                'max-width': '650px'}
 
 app.layout = html.Div(
     [
@@ -326,7 +327,7 @@ app.layout = html.Div(
                 html.Div([html.Img(src=xgplot)])
             ],id='h2_AI',style=styledict) ,
         
-    ], style={'background':'rgb(2,0,36)'}
+    ], style={'background':'rgb(7,0,121)'}
 )
 
 if __name__ == '__main__':
