@@ -287,6 +287,10 @@ styledict = {#'fontColor': 'rgb(253,253,253)',
             'max-width': '700px',
             'background-color': 'white'}
 backgroundcolor = {'background':'rgb(135,206,235)'}
+textlayout = {'fontColor': 'rgb(253,253,253)', 
+                'margin-left':'auto',
+                'margin-right':'auto', 
+                'max-width': '800px'}
 app.layout = html.Div(
     [
         html.Div([
@@ -294,55 +298,66 @@ app.layout = html.Div(
             
             dcc.Markdown(children = gender_wage_gap_discussion),
             dcc.Markdown(children = gss_description)
-            ],id='h1_top',style={'fontColor': 'rgb(253,253,253)', 
-                'margin-left':'auto',
-                'margin-right':'auto', 
-                'max-width': '800px'}) ,
+            ],id='h1_top',style=textlayout) ,
         
         html.Div([
                 html.H2("Income Violin Plots by Sex"),
-                dcc.Graph(figure=violins),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Graph(figure=violins)
             ],id='h2_violin',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+            ],style=textlayout) ,
 
         html.Div([
                 html.H2("Summary Data by Sex"),
-                dcc.Graph(figure=table),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Graph(figure=table)
             ],id='h2_table',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+            ],style=textlayout) ,
         
         html.Div([
                 html.H2("Agreement with Traditional Gender Roles by Sex"),
-                dcc.Graph(figure=fig1),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Graph(figure=fig1)
             ],id='h2_roles',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+            ],style=textlayout) ,
         
         html.Div([
                 html.H2("Job Prestige vs Income, Colors by Sex"),
-                dcc.Graph(figure=fig2),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Graph(figure=fig2)
             ],id='h2_prestige',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+            ],style=textlayout) ,
         
         html.Div([
                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
-                dcc.Graph(figure=fig3),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Graph(figure=fig3)
             ],id='h2_diff_dist',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+            ],style=textlayout) ,
 
 
         html.Div([
                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
-                dcc.Graph(figure=fig4),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Graph(figure=fig4)
             ],id='h2_income_dist',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+            ],style=textlayout) ,
         
         html.Div([
                 html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
-                html.Div([html.Img(src=xgplot)]),
-                dcc.Markdown(children = """Independent of other features, it seems like age, prestige, and education have the biggest overall impact on income, and as each one increases, so too does income. These are not particularly surprising or interesting, so they are all black. 
+                html.Div([html.Img(src=xgplot)])
+            ],id='h2_AI',style=styledict) ,
+        html.Div([
+            dcc.Markdown(children = """Independent of other features, it seems like age, prestige, and education have the biggest overall impact on income, and as each one increases, so too does income. These are not particularly surprising or interesting, so they are all black. 
 
 The other bar colors demonstrate that sex had a larger impact than any belief or hometown region category. The percent impact color tells us that being female had a negative impact on income. Other factors that had a negative impact on income seem to be beliefs which are less than extreme (agree, disagree, or neither agree nor disagree), or in short: apathy. """)
-            ],id='h2_AI',style=styledict) ,
+            ],style=textlayout) ,
         
     ], style=backgroundcolor
 )
