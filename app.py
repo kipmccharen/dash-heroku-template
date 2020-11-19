@@ -298,7 +298,10 @@ app.layout = html.Div(
         html.Div([
                 html.H2("Job Prestige vs Income, Colors by Sex"),
                 dcc.Graph(figure=fig2)
-            ],id='h2_prestige',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_prestige',style={'margin-bottom':'50px', 
+                                'margin-left':'auto',
+                                'margin-right':'auto',
+                                'text-align':'center'}) ,
         
         html.Div([
                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
@@ -309,7 +312,10 @@ app.layout = html.Div(
         html.Div([
                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
                 dcc.Graph(figure=fig4)
-            ],id='h2_income_dist',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_income_dist',style={'margin-bottom':'50px', 
+                                'margin-left':'auto',
+                                'margin-right':'auto',
+                                'text-align':'center'}) ,
         
         html.Div([
                 html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
