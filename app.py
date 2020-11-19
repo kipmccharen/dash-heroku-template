@@ -288,27 +288,36 @@ SIDEBAR_STYLE = {
     "bottom": 0,
     "width": "16rem",
     "padding": "2rem 1rem",
-    "background-color": "#f8f9fa",
+    #"background-color": "#f8f9fa",
 }
+
+
 
 sidebar = html.Div(
     [
-        html.H2("Sidebar", className="display-4"),
+        html.H2("Sections", className="display-4"),
         html.Hr(),
-        html.P(
-            "A simple sidebar layout with navigation links", className="lead"
-        ),
+        # html.P(
+        #     "Sections", className="lead"
+        # ),
         dbc.Nav(
             [
-                dbc.NavLink("What is the Gender Wage Gap?", href="#wage_gap"),
-                dbc.NavLink("What is GSS", href="#gss"),
-                dbc.NavLink("Income Violin Plots by Sex", href="#h2_violin"),
-                dbc.NavLink("Summary Data by Sex", href="#h2_table"),
-                dbc.NavLink("Traditional Gender Role Agreement", href="#h2_roles"),
-                dbc.NavLink("Job Prestige/Income/Sex", href="#h2_prestige"),
-                dbc.NavLink("Income and Prestige Distributions", href="#h2_diff_dist"),
-                dbc.NavLink("Prestige Levels", href="#h2_income_dist"),
-                dbc.NavLink("AI Importance", href="#h2_AI"),
+                dbc.NavLink("Gender Wage Gap & GSS", 
+                    href="/wage_gap-gss", id="page-1-link"),
+                dbc.NavLink("Income Violin Plots by Sex", 
+                    href="/h2_violin", id="page-2-link"),
+                dbc.NavLink("Summary Data by Sex", 
+                    href="/h2_table", id="page-3-link"),
+                dbc.NavLink("Traditional Gender Role Agreement", 
+                    href="/h2_roles", id="page-4-link"),
+                dbc.NavLink("Job Prestige/Income/Sex", 
+                    href="/h2_prestige", id="page-5-link"),
+                dbc.NavLink("Income and Prestige Distributions",
+                    href="/h2_diff_dist", id="page-6-link"),
+                dbc.NavLink("Prestige Levels", 
+                    href="/h2_income_dist", id="page-7-link"),
+                dbc.NavLink("AI Importance", 
+                    href="/h2_AI", id="page-8-link")
             ],
             vertical=True,
             pills=True,
@@ -319,77 +328,170 @@ sidebar = html.Div(
 
 styledict = {#'fontColor': 'rgb(253,253,253)', 
             #'font': '10px Calibri',
-            'border':'1px solid black',
+            #'border':'1px solid black',
             'margin-bottom':'50px', 
             'margin-left':'auto',
             'margin-right':'auto', 
             'text-align':'center',
             'max-width': '700px',
-            'background-color': 'white'}
+            #'background-color': 'white'
+            }
 #backgroundcolor = {'background':'rgb(135,206,235)'}
 textlayout = {#'fontColor': 'rgb(253,253,253)', 
                 'margin-left':'auto',
                 'margin-right':'auto', 
                 'max-width': '800px'}
-app.layout = html.Div(
-    [   dcc.Location(id="url"), sidebar, 
-        html.Div([
-                html.H1("The Wage Gap According To GSS Data"),
-            ],id='h1_top',style=textlayout) ,
-        html.Div([
+
+# the styles for the main content position it to the right of the sidebar and
+# add some padding.
+CONTENT_STYLE = {
+    "margin-left": "18rem",
+    "margin-right": "2rem",
+    "padding": "2rem 1rem",
+}
+
+content = html.Div([
+                html.H1("The Wage Gap According To GSS Data")
+            ], id="page-content", style=CONTENT_STYLE)
+
+app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+
+pagecount = 8
+# this callback uses the current pathname to set the active state of the
+# corresponding nav link to true, allowing users to tell see page they are on
+@app.callback(
+    [Output(f"page-{i}-link", "active") for i in range(1, pagecount)],
+    [Input("url", "pathname")],
+)
+def toggle_active_links(pathname):
+    if pathname == "/":
+        # Treat page 1 as the homepage / index
+        return True, False, False
+    return [pathname == f"/page-{i}" for i in range(1, pagecount)]
+
+
+@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+def render_page_content(pathname):
+    if pathname in ["/", "/wage_gap-gss"]:
+        return html.P([html.Div([
                 dcc.Markdown(children = gender_wage_gap_discussion),
             ],id='wage_gap',style=textlayout) ,
         html.Div([
                 dcc.Markdown(children = gss_description)
-            ],id='gss',style=textlayout) ,
-        
-        html.Div([
+            ],id='gss',style=textlayout)])
+    elif pathname == "/page-2":
+        return html.P([
                 html.H2("Income Violin Plots by Sex"),
                 dcc.Graph(figure=violins),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
-            ],id='h2_violin',style=styledict) ,
-
-        html.Div([
+            ])
+    elif pathname == "/page-3":
+        return html.P([
                 html.H2("Summary Data by Sex"),
                 dcc.Graph(figure=table),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
-            ],id='h2_table',style=styledict) ,
-        
-        html.Div([
+            ])
+    elif pathname == "/page-4":
+        return html.P([
                 html.H2("Agreement with Traditional Gender Roles by Sex"),
                 dcc.Graph(figure=fig1),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
-            ],id='h2_roles',style=styledict) ,
-        
-        html.Div([
+            ])
+    elif pathname == "/page-5":
+        return html.P([
                 html.H2("Job Prestige vs Income, Colors by Sex"),
                 dcc.Graph(figure=fig2),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
-            ],id='h2_prestige',style=styledict) ,
-        
-        html.Div([
+            ])
+    elif pathname == "/page-6":
+        return html.P([
                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
                 dcc.Graph(figure=fig3),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
-            ],id='h2_diff_dist',style=styledict) ,
-
-
-        html.Div([
+            ])
+    elif pathname == "/page-7":
+        return html.P([
                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
                 dcc.Graph(figure=fig4),
                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
-            ],id='h2_income_dist',style=styledict) ,
-        
-        html.Div([
+            ])
+    elif pathname == "/page-8":
+        return html.P([
                 html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
                 html.Div([html.Img(src=xgplot)]),
                 dcc.Markdown(children = """Independent of other features, it seems like age, prestige, and education have the biggest overall impact on income, and as each one increases, so too does income. These are not particularly surprising or interesting, so they are all black. 
 
 The other bar colors demonstrate that sex had a larger impact than any belief or hometown region category. The percent impact color tells us that being female had a negative impact on income. Other factors that had a negative impact on income seem to be beliefs which are less than extreme (agree, disagree, or neither agree nor disagree), or in short: apathy. """)
-            ],id='h2_AI',style=styledict) ,
+            ])
+    # If the user tries to reach a different page, return a 404 message
+    return dbc.Jumbotron(
+        [
+            html.H1("404: Not found", className="text-danger"),
+            html.Hr(),
+            html.P(f"The pathname {pathname} was not recognised..."),
+        ]
+    )
+
+
+# app.layout = html.Div(
+#     [   dcc.Location(id="url"), sidebar, 
+#         html.Div([
+#                 html.H1("The Wage Gap According To GSS Data"),
+#             ],id='h1_top',style=textlayout) ,
+#         html.Div([
+#                 dcc.Markdown(children = gender_wage_gap_discussion),
+#             ],id='wage_gap',style=textlayout) ,
+#         html.Div([
+#                 dcc.Markdown(children = gss_description)
+#             ],id='gss',style=textlayout) ,
         
-    ] #, style=backgroundcolor
-)
+#         html.Div([
+#                 html.H2("Income Violin Plots by Sex"),
+#                 dcc.Graph(figure=violins),
+#                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+#             ],id='h2_violin',style=styledict) ,
+
+#         html.Div([
+#                 html.H2("Summary Data by Sex"),
+#                 dcc.Graph(figure=table),
+#                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+#             ],id='h2_table',style=styledict) ,
+        
+#         html.Div([
+#                 html.H2("Agreement with Traditional Gender Roles by Sex"),
+#                 dcc.Graph(figure=fig1),
+#                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+#             ],id='h2_roles',style=styledict) ,
+        
+#         html.Div([
+#                 html.H2("Job Prestige vs Income, Colors by Sex"),
+#                 dcc.Graph(figure=fig2),
+#                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+#             ],id='h2_prestige',style=styledict) ,
+        
+#         html.Div([
+#                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
+#                 dcc.Graph(figure=fig3),
+#                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+#             ],id='h2_diff_dist',style=styledict) ,
+
+
+#         html.Div([
+#                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
+#                 dcc.Graph(figure=fig4),
+#                 dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+#             ],id='h2_income_dist',style=styledict) ,
+        
+#         html.Div([
+#                 html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
+#                 html.Div([html.Img(src=xgplot)]),
+#                 dcc.Markdown(children = """Independent of other features, it seems like age, prestige, and education have the biggest overall impact on income, and as each one increases, so too does income. These are not particularly surprising or interesting, so they are all black. 
+
+# The other bar colors demonstrate that sex had a larger impact than any belief or hometown region category. The percent impact color tells us that being female had a negative impact on income. Other factors that had a negative impact on income seem to be beliefs which are less than extreme (agree, disagree, or neither agree nor disagree), or in short: apathy. """)
+#             ],id='h2_AI',style=styledict) ,
+        
+#     ] #, style=backgroundcolor
+# )
 
 if __name__ == '__main__':
     app.run_server(debug=True)
