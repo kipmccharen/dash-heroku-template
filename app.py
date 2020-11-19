@@ -282,14 +282,19 @@ styledict = {'fontColor': 'rgb(253,253,253)',
                 'margin-left':'auto',
                 'margin-right':'auto', 
                 'text-align':'center',
-                'max-width': '650px'}
+                'max-width': '800px'}
 
 app.layout = html.Div(
     [
-        html.H1("The Wage Gap According To GSS Data"),
-        
-        dcc.Markdown(children = gender_wage_gap_discussion),
-        dcc.Markdown(children = gss_description),
+        html.Div([
+            html.H1("The Wage Gap According To GSS Data"),
+            
+            dcc.Markdown(children = gender_wage_gap_discussion),
+            dcc.Markdown(children = gss_description)
+            ],id='h1_top',style={'fontColor': 'rgb(253,253,253)', 
+                'margin-left':'auto',
+                'margin-right':'auto', 
+                'max-width': '800px'}) ,
         
         html.Div([
                 html.H2("Income Violin Plots by Sex"),
