@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from pandas.api.types import CategoricalDtype
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import plotly.express as px
@@ -43,6 +44,22 @@ gss_clean = gss_clean.rename({'wtss':'weight',
                               'fepol':'men_bettersuited', 
                               'fepresch':'child_suffer',
                               'meovrwrk':'men_overwork'},axis=1)
+
+cat_order = ['strongly agree', 'agree', 
+    'neither agree nor disagree', 
+    'disagree', 'strongly disagree']
+cat_type = CategoricalDtype(categories=cat_order,
+                ordered=True)
+colorder = ['relationship', 'male_breadwinner',
+    'men_bettersuited', 'child_suffer', 'men_overwork']
+
+for c in colorder:
+    gss_clean[c] = gss_clean[c].astype(cat_type)
+
+cat_type_sex = CategoricalDtype(categories=["female", "male"],
+                ordered=True)
+gss_clean['sex'] = gss_clean['sex'].astype(cat_type_sex)
+
 gss_clean.age = gss_clean.age.replace({'89 or older':'89'})
 gss_clean.age = gss_clean.age.astype('float')
 
@@ -295,7 +312,7 @@ SIDEBAR_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("Sections", className="display-4"),
+        html.H2("The Wage Gap According To GSS Data", className="display-4"),
         html.Hr(),
         dbc.Nav(
             [
@@ -382,37 +399,39 @@ def render_page_content(pathname):
         return html.P([
                 html.H2("Income Violin Plots by Sex"),
                 dcc.Graph(figure=violins),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Markdown(children = """According to data from the GSS, do men have higher incomes than women?
+                
+                While complicated, it appears that the answer is yes. While the median income for men and women is the same, the average is lower for women, and we can see both the first and third quartile breaks are lower for women. """)
             ])
     elif pathname == "/table":
         return html.P([
                 html.H2("Summary Data by Sex"),
                 dcc.Graph(figure=table),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Markdown(children = """The average differences in prestige, socioeconomic index, and education are not very different between men and women. It's peculiar that income is so much more different than these other factors.""")
             ])
     elif pathname == "/roles":
         return html.P([
                 html.H2("Agreement with Traditional Gender Roles by Sex"),
                 dcc.Graph(figure=fig1),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Markdown(children = """In terms of agreeing that women should take care of the home and family, both sexes are in generally similar ratios in all categories except for strongly disagree which is about 2/3 women.""")
             ])
     elif pathname == "/prestige":
         return html.P([
                 html.H2("Job Prestige vs Income, Colors by Sex"),
                 dcc.Graph(figure=fig2),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Markdown(children = """Job prestige has a very similar impact on income between men and women, the average lines are in the same direction and almost lining up but not quite. Women's income grows slightly less across prestige levels.""")
             ])
     elif pathname == "/diff_dist":
         return html.P([
                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
                 dcc.Graph(figure=fig3),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Markdown(children = """Building off the violin plots, if we compare the difference in job prestige between men and women, they are almost the same at every point. On average, women even have higher prestige jobs than men, albeit with a lower window. These don't seem to agree at all!""")
             ])
     elif pathname == "/income_dist":
         return html.P([
                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
                 dcc.Graph(figure=fig4),
-                dcc.Markdown(children = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.""")
+                dcc.Markdown(children = """Even if we break down groups in 6 separate categories (1 is lowest, 6 is highest prestige), in terms of actually getting paid given their prestige, once again we see either parity or higher male income at every part of the distribution.""")
             ])
     elif pathname == "/AI":
         return html.P([
