@@ -103,7 +103,7 @@ fig1.update(layout=dict(title=dict(x=0.5)))
 fig2 = px.scatter(gss_clean, x='job_prestige', y='income',
                 color = 'sex',
                 trendline='ols',
-                height=600, width=600,
+                #height=600, width=600,
                 labels={'job_prestige':'Job Prestige', 
                     'income':'Income'},
                 hover_data=['education', 'socioeconomic_index'])
@@ -137,7 +137,7 @@ fig4 = px.box(gss6, x='sex', y = 'income',
             color_discrete_map = {'male':'blue', 'female':'red'},
             facet_col_wrap=2,
             labels={'sex':'', 'value':''}, 
-            width=1000, height=1000,
+            #width=600, height=600,
             hover_data=['job_prestige'])
             
 fig4.for_each_annotation(lambda a: a.update( \
@@ -215,10 +215,10 @@ xg_df = pd.read_csv(xgb_csv)
 xg_df['color'] = xg_df.feature.apply(addcolor)
 
 #set base font size
-plt.rcParams.update({'font.size': 14})
+plt.rcParams.update({'font.size': 10})
 
 #create plot and set figure size
-statfig,statax = plt.subplots(figsize = (12,12))
+statfig,statax = plt.subplots(figsize = (10,12))
 
 #create bar chart
 statax.barh(xg_df.feature, xg_df.imp_pct, align='center')
