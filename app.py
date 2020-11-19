@@ -284,7 +284,7 @@ styledict = {#'fontColor': 'rgb(253,253,253)',
             'margin-left':'auto',
             'margin-right':'auto', 
             'text-align':'center',
-            'max-width': '800px'
+            'max-width': '800px',
             'background-color': 'white'}
 backgroundcolor = {'background':'rgb(135,206,235)'}
 app.layout = html.Div(
