@@ -11,7 +11,7 @@ from xgboost_analysis import make_xgboost_plot
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-gss_source = "https://github.com/jkropko/DS-6001/raw/master/localdata/gss2018.csv"
+gss_source = "https://raw.githubusercontent.com/kipmccharen/dash-heroku-template/master/gss2018.csv"
 gss = pd.read_csv(gss_source,
                 encoding='cp1252', 
                 na_values=['IAP','IAP,DK,NA,uncodeable', 'NOT SURE',

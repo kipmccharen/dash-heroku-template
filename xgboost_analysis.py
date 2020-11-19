@@ -5,6 +5,8 @@ import pandas as pd
 from io import BytesIO
 import base64
 
+rawcsv = r"https://raw.githubusercontent.com/kipmccharen/dash-heroku-template/master/gss_xgboost_df.csv"
+
 #define categories of items
 labelsdicts = [{"name": "Born Female", "inkey": ["SEX: Female"], 
                 "order": 2, "color":"orangered"},
@@ -53,7 +55,7 @@ def fig_to_uri(in_fig, close_all=True, **save_args):
     return "data:image/png;base64,{}".format(encoded)
 
 def make_xgboost_plot():
-    xg_df = pd.read_csv("gss_xgboost_df.csv")
+    xg_df = pd.read_csv(rawcsv)
 
     #add color to each feature from dict above
     xg_df['color'] = xg_df.feature.apply(addcolor)
