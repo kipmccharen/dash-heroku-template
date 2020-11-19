@@ -279,33 +279,41 @@ app.layout = html.Div(
         dcc.Markdown(children = gender_wage_gap_discussion),
         dcc.Markdown(children = gss_description),
         
-        html.H2("Income Violin Plots by Sex"),
+        html.Div([
+                html.H2("Income Violin Plots by Sex"),
+                dcc.Graph(figure=violins)
+            ],id='h2_violin',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+
+        html.Div([
+                html.H2("Summary Data by Sex"),
+                dcc.Graph(figure=table)
+            ],id='h2_table',style={'margin-bottom':'50px', 'text-align':'center'}) ,
         
-        dcc.Graph(figure=violins),
+        html.Div([
+                html.H2("Agreement with Traditional Gender Roles by Sex"),
+                dcc.Graph(figure=fig1)
+            ],id='h2_roles',style={'margin-bottom':'50px', 'text-align':'center'}) ,
         
-        html.H2("Summary Data by Sex"),
+        html.Div([
+                html.H2("Job Prestige vs Income, Colors by Sex"),
+                dcc.Graph(figure=fig2)
+            ],id='h2_prestige',style={'margin-bottom':'50px', 'text-align':'center'}) ,
         
-        dcc.Graph(figure=table),
+        html.Div([
+                html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
+                dcc.Graph(figure=fig3)
+            ],id='h2_diff_dist',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+
+
+        html.Div([
+                html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
+                dcc.Graph(figure=fig4)
+            ],id='h2_income_dist',style={'margin-bottom':'50px', 'text-align':'center'}) ,
         
-        html.H2("Agreement with Traditional Gender Roles by Sex"),
-        
-        dcc.Graph(figure=fig1),
-        
-        html.H2("Job Prestige vs Income, Colors by Sex"),
-        
-        dcc.Graph(figure=fig2),
-        
-        html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
-        
-        dcc.Graph(figure=fig3),
-        
-        html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
-        
-        dcc.Graph(figure=fig4),
-        
-        html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
-        
-        html.Div([html.Img(src=xgplot)])
+        html.Div([
+                html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
+                html.Div([html.Img(src=xgplot)])
+            ],id='h2_AI',style={'margin-bottom':'50px', 'text-align':'center'}) ,
         
     ]
 )
