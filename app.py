@@ -3,8 +3,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import plotly.express as px
-#import dash
-from jupyter_dash import JupyterDash
+import dash
+#from jupyter_dash import JupyterDash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -153,7 +153,8 @@ violins = px.violin(gss_clean, x="income",
 
 xgplot = make_xgboost_plot()
 
-app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
+#app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
+app = Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(
     [
@@ -194,4 +195,5 @@ app.layout = html.Div(
 )
 
 if __name__ == '__main__':
-    app.run_server(mode='inline', debug=True, port=8050)
+    app.run_server(debug=True)
+    #mode='inline',  , port=8050
