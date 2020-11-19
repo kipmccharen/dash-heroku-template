@@ -8,7 +8,6 @@ from dash import Dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-#from xgboost_analysis import make_xgboost_plot
 from matplotlib import pyplot as plt
 from matplotlib import colors as pltcolors
 from io import BytesIO
@@ -80,6 +79,7 @@ job prestige (independently rated in a [2012 lab study](https://gss.norc.org/Doc
 levels of agreement with statements (like the one above) related to sex, family life, and work. 
 """
 
+#%%
 gss_grp = gss_clean[["sex", "income", "job_prestige", \
                 "socioeconomic_index", "education"]]
 gss_grp = round(gss_grp.groupby("sex").mean(),2).reset_index()
@@ -99,6 +99,7 @@ fig1 = px.bar(bread, x="Male Breadwinner", y="Count", color='Sex',
 fig1.update_layout(showlegend=True)
 fig1.update(layout=dict(title=dict(x=0.5)))
 
+#%%
 fig2 = px.scatter(gss_clean, x='job_prestige', y='income',
                 color = 'sex',
                 trendline='ols',
@@ -108,6 +109,7 @@ fig2 = px.scatter(gss_clean, x='job_prestige', y='income',
                 hover_data=['education', 'socioeconomic_index'])
 fig2.update(layout=dict(title=dict(x=0.5)))
 
+#%%
 gss_grp = pd.melt(gss_clean, id_vars=["sex"], 
                 value_vars=["income","job_prestige"], 
                 var_name="variable", 
@@ -124,6 +126,7 @@ fig3.update_yaxes(matches=None)
 fig3.update_layout(showlegend=False)
 fig3.update(layout=dict(title=dict(x=0.5)))
 
+#%%
 gss6 = gss_clean[["income", "sex", "job_prestige"]]
 gss6['job_prest_grp'] = pd.cut(gss6.job_prestige, 6,
                           labels = list(range(1,7)))
@@ -158,6 +161,7 @@ violins = px.violin(gss_clean, x="income",
             hover_data=gss_clean.columns)
 
 
+#%%
 #define categories of items
 labelsdicts = [{"name": "Born Female", "inkey": ["SEX: Female"], 
                 "order": 2, "color":"orangered"},
@@ -264,7 +268,7 @@ statax.set_ylabel('')
 
 xgplot = fig_to_uri(statfig)
 
-#app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
+#%%
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
@@ -308,4 +312,3 @@ app.layout = html.Div(
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-    #mode='inline',  , port=8050
