@@ -13,6 +13,44 @@ from matplotlib import colors as pltcolors
 from io import BytesIO
 import base64
 
+
+# the style arguments for the sidebar. We use position:fixed and a fixed width
+SIDEBAR_STYLE = {
+    "position": "fixed",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "16rem",
+    "padding": "2rem 1rem",
+    "background-color": "#f8f9fa",
+}
+
+sidebar = html.Div(
+    [
+        html.H2("Sidebar", className="display-4"),
+        html.Hr(),
+        html.P(
+            "A simple sidebar layout with navigation links", className="lead"
+        ),
+        dbc.Nav(
+            [
+                dbc.NavLink("What is the Gender Wage Gap?", href="#wage_gap"),
+                dbc.NavLink("What is GSS", href="#gss"),
+                dbc.NavLink("Income Violin Plots by Sex", href="#h2_violin"),
+                dbc.NavLink("Summary Data by Sex", href="#h2_table"),
+                dbc.NavLink("Traditional Gender Role Agreement", href="#h2_roles"),
+                dbc.NavLink("Job Prestige/Income/Sex", href="#h2_prestige"),
+                dbc.NavLink("Income and Prestige Distributions", href="#h2_diff_dist"),
+                dbc.NavLink("Prestige Levels", href="#h2_income_dist"),
+                dbc.NavLink("AI Importance", href="#h2_AI"),
+            ],
+            vertical=True,
+            pills=True,
+        ),
+    ],
+    style=SIDEBAR_STYLE,
+)
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 gss_source = "https://raw.githubusercontent.com/kipmccharen/dash-heroku-template/master/gss2018.csv"
@@ -292,13 +330,16 @@ textlayout = {'fontColor': 'rgb(253,253,253)',
                 'margin-right':'auto', 
                 'max-width': '800px'}
 app.layout = html.Div(
-    [
+    [   dcc.Location(id="url"), sidebar, 
         html.Div([
-            html.H1("The Wage Gap According To GSS Data"),
-            
-            dcc.Markdown(children = gender_wage_gap_discussion),
-            dcc.Markdown(children = gss_description)
+                html.H1("The Wage Gap According To GSS Data"),
             ],id='h1_top',style=textlayout) ,
+        html.Div([
+                dcc.Markdown(children = gender_wage_gap_discussion),
+            ],id='wage_gap',style=textlayout) ,
+        html.Div([
+                dcc.Markdown(children = gss_description)
+            ],id='gss',style=textlayout) ,
         
         html.Div([
                 html.H2("Income Violin Plots by Sex"),
