@@ -276,6 +276,13 @@ server = app.server
 # ;
 # style={'fontColor': 'blue', 'background'='rgb(2,0,36)',
 #   'background'= 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,31,145,1) 15%, rgba(27,144,237,1) 100%)'}
+styledict = {'fontColor': 'rgb(242,242,242)', 
+                'border':'1px solid black',
+                'margin-bottom':'50px', 
+                'margin-left':'auto',
+                'margin-right':'auto', 
+                'text-align':'center'}
+
 app.layout = html.Div(
     [
         html.H1("The Wage Gap According To GSS Data"),
@@ -286,47 +293,40 @@ app.layout = html.Div(
         html.Div([
                 html.H2("Income Violin Plots by Sex"),
                 dcc.Graph(figure=violins)
-            ],id='h2_violin',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_violin',style=styledict) ,
 
         html.Div([
                 html.H2("Summary Data by Sex"),
                 dcc.Graph(figure=table)
-            ],id='h2_table',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_table',style=styledict) ,
         
         html.Div([
                 html.H2("Agreement with Traditional Gender Roles by Sex"),
                 dcc.Graph(figure=fig1)
-            ],id='h2_roles',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_roles',style=styledict) ,
         
         html.Div([
                 html.H2("Job Prestige vs Income, Colors by Sex"),
                 dcc.Graph(figure=fig2)
-            ],id='h2_prestige',style={'margin-bottom':'50px', 
-                                'margin-left':'auto',
-                                'margin-right':'auto',
-                                'text-align':'center'}) ,
+            ],id='h2_prestige',style=styledict) ,
         
         html.Div([
                 html.H2("Differences in Distribution by Sex\r\nof Income and Job Prestige"),
                 dcc.Graph(figure=fig3)
-            ],id='h2_diff_dist',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_diff_dist',style=styledict) ,
 
 
         html.Div([
                 html.H2("Income Distributions by Sex\r\nacross equally sized Job Prestige Levels 1-6"),
                 dcc.Graph(figure=fig4)
-            ],id='h2_income_dist',style={'margin-bottom':'50px', 
-                                'margin-left':'auto',
-                                'margin-right':'auto',
-                                'text-align':'center'}) ,
+            ],id='h2_income_dist',style=styledict) ,
         
         html.Div([
                 html.H2("AI-Predicted % Importance on\r\nIncome (independent of other features)"),
                 html.Div([html.Img(src=xgplot)])
-            ],id='h2_AI',style={'margin-bottom':'50px', 'text-align':'center'}) ,
+            ],id='h2_AI',style=styledict) ,
         
-    ], style={'fontColor': 'rgb(242,242,242)', 'background':'rgb(2,0,36)',
-   'background':'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,31,145,1) 15%, rgba(27,144,237,1) 100%)'}
+    ], style={'background':'rgb(2,0,36)'}
 )
 
 if __name__ == '__main__':
