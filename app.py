@@ -218,7 +218,7 @@ xg_df['color'] = xg_df.feature.apply(addcolor)
 plt.rcParams.update({'font.size': 14})
 
 #create plot and set figure size
-statfig,statax = plt.subplots(figsize = (7,12))
+statfig,statax = plt.subplots(figsize = (12,12))
 
 #create bar chart
 statax.barh(xg_df.feature, xg_df.imp_pct, align='center')
@@ -265,6 +265,7 @@ statax.text(11,tsh + 1.5,"increases",color="black",fontweight='bold')
 #statax.set_title("AI-Predicted % Importance on Income\n(independent of other features)")
 #statax.text(5,tsh + 4,"Source: 2018 General Social Survey (GSS)")
 statax.set_ylabel('')
+plt.gcf().subplots_adjust(left=0.4, bottom=0.01, top=1)
 
 xgplot = fig_to_uri(statfig)
 
