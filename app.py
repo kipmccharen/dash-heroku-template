@@ -312,7 +312,7 @@ SIDEBAR_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("The Wage Gap According To GSS Data", className="display-4"),
+        html.H2("Pages", className="display-4"),
         html.Hr(),
         dbc.Nav(
             [
@@ -364,9 +364,7 @@ CONTENT_STYLE = {
     "padding": "2rem 1rem",
 }
 
-content = html.Div([
-                html.H1("The Wage Gap According To GSS Data")
-            ], id="page-content", style=CONTENT_STYLE)
+content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
@@ -390,6 +388,7 @@ def toggle_active_links(pathname):
 def render_page_content(pathname):
     if pathname in ["/", "/wage_gap-gss"]:
         return html.P([html.Div([
+                html.H1("The Wage Gap According To GSS Data"),
                 dcc.Markdown(children = gender_wage_gap_discussion),
             ],id='wage_gap',style=textlayout) ,
         html.Div([
