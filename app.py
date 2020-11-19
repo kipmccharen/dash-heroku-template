@@ -15,44 +15,7 @@ from io import BytesIO
 import base64
 
 
-# the style arguments for the sidebar. We use position:fixed and a fixed width
-SIDEBAR_STYLE = {
-    "position": "fixed",
-    "top": 0,
-    "left": 0,
-    "bottom": 0,
-    "width": "16rem",
-    "padding": "2rem 1rem",
-    "background-color": "#f8f9fa",
-}
-
-sidebar = html.Div(
-    [
-        html.H2("Sidebar", className="display-4"),
-        html.Hr(),
-        html.P(
-            "A simple sidebar layout with navigation links", className="lead"
-        ),
-        dbc.Nav(
-            [
-                dbc.NavLink("What is the Gender Wage Gap?", href="#wage_gap"),
-                dbc.NavLink("What is GSS", href="#gss"),
-                dbc.NavLink("Income Violin Plots by Sex", href="#h2_violin"),
-                dbc.NavLink("Summary Data by Sex", href="#h2_table"),
-                dbc.NavLink("Traditional Gender Role Agreement", href="#h2_roles"),
-                dbc.NavLink("Job Prestige/Income/Sex", href="#h2_prestige"),
-                dbc.NavLink("Income and Prestige Distributions", href="#h2_diff_dist"),
-                dbc.NavLink("Prestige Levels", href="#h2_income_dist"),
-                dbc.NavLink("AI Importance", href="#h2_AI"),
-            ],
-            vertical=True,
-            pills=True,
-        ),
-    ],
-    style=SIDEBAR_STYLE,
-)
-
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+#external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 gss_source = "https://raw.githubusercontent.com/kipmccharen/dash-heroku-template/master/gss2018.csv"
 xgb_csv = r"https://raw.githubusercontent.com/kipmccharen/dash-heroku-template/master/gss_xgboost_df.csv"
@@ -310,12 +273,50 @@ plt.gcf().subplots_adjust(left=0.4, bottom=0.01, top=1)
 xgplot = fig_to_uri(statfig)
 
 #%%
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 server = app.server
 # ;
 # ;
 # style={'fontColor': 'blue', 'background'='rgb(2,0,36)',
 #   'background'= 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,31,145,1) 15%, rgba(27,144,237,1) 100%)'}
+
+# the style arguments for the sidebar. We use position:fixed and a fixed width
+SIDEBAR_STYLE = {
+    "position": "fixed",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "16rem",
+    "padding": "2rem 1rem",
+    "background-color": "#f8f9fa",
+}
+
+sidebar = html.Div(
+    [
+        html.H2("Sidebar", className="display-4"),
+        html.Hr(),
+        html.P(
+            "A simple sidebar layout with navigation links", className="lead"
+        ),
+        dbc.Nav(
+            [
+                dbc.NavLink("What is the Gender Wage Gap?", href="#wage_gap"),
+                dbc.NavLink("What is GSS", href="#gss"),
+                dbc.NavLink("Income Violin Plots by Sex", href="#h2_violin"),
+                dbc.NavLink("Summary Data by Sex", href="#h2_table"),
+                dbc.NavLink("Traditional Gender Role Agreement", href="#h2_roles"),
+                dbc.NavLink("Job Prestige/Income/Sex", href="#h2_prestige"),
+                dbc.NavLink("Income and Prestige Distributions", href="#h2_diff_dist"),
+                dbc.NavLink("Prestige Levels", href="#h2_income_dist"),
+                dbc.NavLink("AI Importance", href="#h2_AI"),
+            ],
+            vertical=True,
+            pills=True,
+        ),
+    ],
+    style=SIDEBAR_STYLE,
+)
+
 styledict = {#'fontColor': 'rgb(253,253,253)', 
             #'font': '10px Calibri',
             'border':'1px solid black',
@@ -325,8 +326,8 @@ styledict = {#'fontColor': 'rgb(253,253,253)',
             'text-align':'center',
             'max-width': '700px',
             'background-color': 'white'}
-backgroundcolor = {'background':'rgb(135,206,235)'}
-textlayout = {'fontColor': 'rgb(253,253,253)', 
+#backgroundcolor = {'background':'rgb(135,206,235)'}
+textlayout = {#'fontColor': 'rgb(253,253,253)', 
                 'margin-left':'auto',
                 'margin-right':'auto', 
                 'max-width': '800px'}
@@ -387,7 +388,7 @@ app.layout = html.Div(
 The other bar colors demonstrate that sex had a larger impact than any belief or hometown region category. The percent impact color tells us that being female had a negative impact on income. Other factors that had a negative impact on income seem to be beliefs which are less than extreme (agree, disagree, or neither agree nor disagree), or in short: apathy. """)
             ],id='h2_AI',style=styledict) ,
         
-    ], style=backgroundcolor
+    ] #, style=backgroundcolor
 )
 
 if __name__ == '__main__':
