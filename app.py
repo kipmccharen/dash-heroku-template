@@ -137,7 +137,8 @@ fig4 = px.box(gss6, x='sex', y = 'income',
             color_discrete_map = {'male':'blue', 'female':'red'},
             facet_col_wrap=2,
             labels={'sex':'', 'value':''}, 
-            #width=600, height=600,
+            #width=600, 
+            height=600,
             hover_data=['job_prestige'])
             
 fig4.for_each_annotation(lambda a: a.update( \
@@ -218,7 +219,7 @@ xg_df['color'] = xg_df.feature.apply(addcolor)
 plt.rcParams.update({'font.size': 10})
 
 #create plot and set figure size
-statfig,statax = plt.subplots(figsize = (10,12))
+statfig,statax = plt.subplots(figsize = (8,10))
 
 #create bar chart
 statax.barh(xg_df.feature, xg_df.imp_pct, align='center')
@@ -332,7 +333,7 @@ app.layout = html.Div(
                 html.Div([html.Img(src=xgplot)])
             ],id='h2_AI',style=styledict) ,
         
-    ], style={'background':'rgb(7,0,121)'}
+    ], style=backgroundcolor
 )
 
 if __name__ == '__main__':
