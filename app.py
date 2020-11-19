@@ -272,7 +272,10 @@ xgplot = fig_to_uri(statfig)
 #%%
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
-
+# ;
+# ;
+# style={'fontColor': 'blue', 'background'='rgb(2,0,36)',
+#   'background'= 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,31,145,1) 15%, rgba(27,144,237,1) 100%)'}
 app.layout = html.Div(
     [
         html.H1("The Wage Gap According To GSS Data"),
@@ -322,7 +325,8 @@ app.layout = html.Div(
                 html.Div([html.Img(src=xgplot)])
             ],id='h2_AI',style={'margin-bottom':'50px', 'text-align':'center'}) ,
         
-    ]
+    ], style={'fontColor': 'rgb(242,242,242)', 'background':'rgb(2,0,36)',
+   'background':'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(5,31,145,1) 15%, rgba(27,144,237,1) 100%)'}
 )
 
 if __name__ == '__main__':
